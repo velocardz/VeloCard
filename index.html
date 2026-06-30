@@ -103,7 +103,6 @@
     </div>
 
     <div id="home-screen">
-        <!-- MasterCard -->
         <div class="card">
             <div class="card-type">MASTER CARD</div>
             <div class="vcc-badge">GLOBAL ACCESS</div>
@@ -121,7 +120,6 @@
             <button class="buy-btn" onclick="openPayment('MasterCard Global Base', '₹399')">Activate Card</button>
         </div>
 
-        <!-- Visa Card -->
         <div class="card">
             <div class="card-type visa">VISA CARD</div>
             <div class="vcc-badge">GLOBAL ACCESS</div>
@@ -139,7 +137,6 @@
             <button class="buy-btn" onclick="openPayment('Visa Gold Premium', '₹799')">Activate Card</button>
         </div>
 
-        <!-- Platinum Card -->
         <div class="card">
             <div class="card-type platinum">PLATINUM CARD</div>
             <div class="vcc-badge">GLOBAL ACCESS</div>
@@ -158,7 +155,6 @@
         </div>
     </div>
 
-    <!-- Payment Container Terminal -->
     <div class="payment-container" id="payment-terminal">
         <button class="back-btn" onclick="goBack()">&larr; Go Back to Cards</button>
         
@@ -190,7 +186,6 @@
         </div>
     </div>
 
-    <!-- Success Pop-up Modal Section -->
     <div class="success-overlay" id="success-screen">
         <div class="success-card">
             <div class="success-icon">✓</div>
@@ -200,7 +195,6 @@
             <span class="highlight-name" id="display-name"></span>
             <span class="highlight-email" id="display-email"></span>
 
-            <!-- Professional English script delivery text box -->
             <div class="professional-delivery-text">
                 <p>Your registered <strong>Virtual VCC Card</strong> and secure login credentials will be systematically dispatched directly to your verified email address after a standard 5-day internal verification process. Please check your <strong>Inbox and Spam folder after exactly 5 days</strong>.</p>
             </div>
@@ -210,70 +204,69 @@
                 <p>वर्चुअल कार्ड तभी एक्टिवेट किया जाएगा जब आपकी पेमेंट 100% असली (Real) होगी और हमारे बैंक सर्वर द्वारा वेरीफाई हो जाएगी। अगर किसी ने फेक या एडिटेड स्क्रीनशॉट अपलोड किया, तो उसे कोई कार्ड नहीं मिलेगा और उसका डिवाइस हमेशा के लिए ब्लॉक कर दिया जाएगा।</p>
             </div>
 
-            <div class="timer-box">
-                <div class="timer-title">CARD ACTIVATION ESTIMATED TIME</div>
-                <div class="countdown-display" id="countdown-timer">05d 04h 32m 15s</div>
+            <div class="success-card .timer-box" style="background: rgba(0, 204, 255, 0.05); border: 1px solid rgba(0, 204, 255, 0.2); border-radius: 12px; padding: 14px; margin-bottom: 15px;">
+                <div class="timer-title" style="font-size: 0.75rem; color: #00ccff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: bold;">CARD ACTIVATION ESTIMATED TIME</div>
+                <div class="countdown-display" id="countdown-timer" style="font-size: 1.3rem; font-weight: bold; color: #ffffff; letter-spacing: 1px;">05d 04h 32m 15s</div>
             </div>
         </div>
     </div>
 
-    <!-- Live Buyer Popups Toast Element -->
     <div class="notification-toast" id="purchase-notification">
         <div class="notif-pulse"></div>
         <div class="notif-text" id="notif-content">
-            User <strong>Rahul Sharma</strong> from <strong>Delhi</strong> just activated a <span class="notif-price">₹799</span> Visa Card!
+            User <strong>Rahul Sharma</strong> (<span style="color: #00ccff;">p***@gmail.com</span>) just activated a <span class="notif-price">₹799</span> Visa Card!
         </div>
     </div>
 
     <script>
-        // 20 Simple/Real Names + 20 Free Fire Gaming Names (Total 40 perfectly mixed)
+        // 40 perfectly randomized Names and purely Random Letter masked Emails (20 Real + 20 Gaming)
         let fakeBuyers = [
-            // 20 Real & Simple Names
-            { name: "Rahul Sharma", city: "Delhi NCR", price: "₹799", card: "Visa Card" },
-            { name: "Amit Kumar", city: "Lucknow", price: "₹399", card: "Master Card" },
-            { name: "Vikram Singh", city: "Jaipur", price: "₹799", card: "Visa Card" },
-            { name: "Karan Patel", city: "Ahmedabad", price: "₹399", card: "Master Card" },
-            { name: "Deepak Raj", city: "Patna", price: "₹1499", card: "Platinum Card" },
-            { name: "Rohan Verma", city: "Mumbai", price: "₹1499", card: "Platinum Card" },
-            { name: "Sachin Mishra", city: "Kanpur", price: "₹399", card: "Master Card" },
-            { name: "Ankit Yadav", city: "Gorakhpur", price: "₹799", card: "Visa Card" },
-            { name: "Sameer Joshi", city: "Bhopal", price: "₹399", card: "Master Card" },
-            { name: "Mayank Gupta", city: "Indore", price: "₹1499", card: "Platinum Card" },
-            { name: "Hardik Choudhary", city: "Panipat", price: "₹799", card: "Visa Card" },
-            { name: "Prince Shrivastava", city: "Ranchi", price: "₹399", card: "Master Card" },
-            { name: "Suhail Khan", city: "Meerut", price: "₹799", card: "Visa Card" },
-            { name: "Aman Dubey", city: "Varanasi", price: "₹1499", card: "Platinum Card" },
-            { name: "Yash Agarwal", city: "Agra", price: "₹799", card: "Visa Card" },
-            { name: "Rohan Das", city: "Kolkata", price: "₹1499", card: "Platinum Card" },
-            { name: "Aditya Thakur", city: "Ghaziabad", price: "₹399", card: "Master Card" },
-            { name: "Vivek Anand", city: "Gaya", price: "₹799", card: "Visa Card" },
-            { name: "Manish Joshi", city: "Udaipur", price: "₹1499", card: "Platinum Card" },
-            { name: "Sanjay Rawat", city: "Dehradun", price: "₹399", card: "Master Card" },
+            // 20 Real & Simple Names + Completely Random First Letter Emails
+            { name: "Rahul Sharma", email: "p***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Amit Kumar", email: "b***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Vikram Singh", email: "x***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Karan Patel", email: "m***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Deepak Raj", email: "s***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Rohan Verma", email: "a***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Sachin Mishra", email: "z***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Ankit Yadav", email: "k***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Sameer Joshi", email: "v***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Mayank Gupta", email: "t***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Hardik Choudhary", email: "r***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Prince Shrivastava", email: "g***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Suhail Khan", email: "f***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Aman Dubey", email: "j***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Yash Agarwal", email: "w***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Rohan Das", email: "n***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Aditya Thakur", email: "l***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Vivek Anand", email: "c***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Manish Joshi", email: "h***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Sanjay Rawat", email: "q***@gmail.com", price: "₹399", card: "Master Card" },
 
-            // 20 Free Fire Gaming Names
-            { name: "Free Fire Lover", city: "Uttar Pradesh", price: "₹399", card: "Master Card" },
-            { name: "Gamer King", city: "Bihar", price: "₹1499", card: "Platinum Card" },
-            { name: "Evo M10", city: "Madhya Pradesh", price: "₹1499", card: "Platinum Card" },
-            { name: "Rai Star", city: "Haryana", price: "₹799", card: "Visa Card" },
-            { name: "Alpha Gamer", city: "Punjab", price: "₹799", card: "Visa Card" },
-            { name: "Total Gaming", city: "Aligarh", price: "₹1499", card: "Platinum Card" },
-            { name: "Sniper King", city: "Jodhpur", price: "₹399", card: "Master Card" },
-            { name: "Badge 99", city: "Muzaffarpur", price: "₹799", card: "Visa Card" },
-            { name: "Ajjubhai", city: "Bareilly", price: "₹1499", card: "Platinum Card" },
-            { name: "Vasiyo CR7", city: "Kota", price: "₹399", card: "Master Card" },
-            { name: "Pro Gamer", city: "Jhansi", price: "₹799", card: "Visa Card" },
-            { name: "OP King", city: "Mathura", price: "₹1499", card: "Platinum Card" },
-            { name: "Amitbhai YT", city: "Alwar", price: "₹399", card: "Master Card" },
-            { name: "Legendary Boy", city: "Rohtak", price: "₹799", card: "Visa Card" },
-            { name: "Headshot Master", city: "Sonipat", price: "₹1499", card: "Platinum Card" },
-            { name: "Dynamo Op", city: "Gwalior", price: "₹799", card: "Visa Card" },
-            { name: "Mortal Star", city: "Jabalpur", price: "₹399", card: "Master Card" },
-            { name: "Tonde Gamer", city: "Ajmer", price: "₹1499", card: "Platinum Card" },
-            { name: "Ninja FF", city: "Surat", price: "₹799", card: "Visa Card" },
-            { name: "Born 2 Kill", city: "Pune", price: "₹1499", card: "Platinum Card" }
+            // 20 Free Fire Gaming Names + Completely Random First Letter Emails
+            { name: "Free Fire Lover", email: "d***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Gamer King", email: "u***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Evo M10", email: "o***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Rai Star", email: "y***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Alpha Gamer", email: "e***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Total Gaming", email: "i***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Sniper King", email: "w***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Badge 99", email: "t***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Ajjubhai", email: "v***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Vasiyo CR7", email: "s***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Pro Gamer", email: "n***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "OP King", email: "k***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Amitbhai YT", email: "h***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Legendary Boy", email: "b***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Headshot Master", email: "z***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Dynamo Op", email: "a***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Mortal Star", email: "r***@gmail.com", price: "₹399", card: "Master Card" },
+            { name: "Tonde Gamer", email: "m***@gmail.com", price: "₹1499", card: "Platinum Card" },
+            { name: "Ninja FF", email: "p***@gmail.com", price: "₹799", card: "Visa Card" },
+            { name: "Born 2 Kill", email: "g***@gmail.com", price: "₹1499", card: "Platinum Card" }
         ];
 
-        // This function fully shuffles the names every time page loads so they turn up randomly and mixed
+        // Shuffles the names array completely on load so it pops up non-stop in randomized loop
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -289,15 +282,13 @@
             const toast = document.getElementById('purchase-notification');
             const content = document.getElementById('notif-content');
             
-            // Set the first display item
             const initialBuyer = fakeBuyers[notifIndex];
-            content.innerHTML = `User <strong>${initialBuyer.name}</strong> from <strong>${initialBuyer.city}</strong> just activated a <span class="notif-price">${initialBuyer.price}</span> ${initialBuyer.card}!`;
+            content.innerHTML = `User <strong>${initialBuyer.name}</strong> (<span style="color: #00ccff;">${initialBuyer.email}</span>) just activated a <span class="notif-price">${initialBuyer.price}</span> ${initialBuyer.card}!`;
             
-            // Periodically shift through array (which is already randomized)
             setInterval(() => {
                 notifIndex = (notifIndex + 1) % fakeBuyers.length;
                 const randomBuyer = fakeBuyers[notifIndex];
-                content.innerHTML = `User <strong>${randomBuyer.name}</strong> from <strong>${randomBuyer.city}</strong> just activated a <span class="notif-price">${randomBuyer.price}</span> ${randomBuyer.card}!`;
+                content.innerHTML = `User <strong>${randomBuyer.name}</strong> (<span style="color: #00ccff;">${randomBuyer.email}</span>) just activated a <span class="notif-price">${randomBuyer.price}</span> ${randomBuyer.card}!`;
                 
                 toast.classList.add('show');
                 setTimeout(() => { toast.classList.remove('show'); }, 3500);
@@ -305,7 +296,7 @@
         }
 
         window.onload = function() {
-            shuffleArray(fakeBuyers); // Randomize names at load time
+            shuffleArray(fakeBuyers); // Shuffles instantly
             triggerLiveNotification();
         };
 
