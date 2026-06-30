@@ -75,19 +75,25 @@
         .success-icon { font-size: 3rem; color: #00ff66; margin-bottom: 10px; }
         .success-card h2 { font-size: 1.5rem; color: #ffffff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Danger Fake Warning Box */
+        /* New Information Alert Box for Delivery Notification */
+        .delivery-info-box { background: rgba(0, 204, 255, 0.08); border: 1px dashed #00ccff; border-radius: 12px; padding: 14px; margin-bottom: 15px; text-align: left; }
+        .delivery-info-box p { color: #ffffff; font-size: 0.85rem; line-height: 1.4; }
+        .delivery-info-box strong { color: #00ccff; }
+        .delivery-info-box .days-highlight { color: #00ff66; font-weight: bold; }
+
+        /* Danger Warning Box for Fake Payments */
         .warning-danger-box { background: rgba(255, 51, 51, 0.07); border: 1px solid rgba(255, 51, 51, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 20px; text-align: left; }
         .warning-danger-box strong { color: #ff3333; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
         .warning-danger-box p { color: #e0e0e0; font-size: 0.8rem; line-height: 1.4; }
 
-        /* New Live Countdown Timer Box */
+        /* Countdown Timer Design */
         .timer-box { background: rgba(0, 204, 255, 0.05); border: 1px solid rgba(0, 204, 255, 0.2); border-radius: 12px; padding: 14px; margin-bottom: 15px; }
         .timer-title { font-size: 0.75rem; color: #00ccff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: bold; }
         .countdown-display { font-size: 1.3rem; font-weight: bold; color: #ffffff; letter-spacing: 1px; }
 
         .success-card .highlight-email { color: #00ff66; font-weight: bold; display: block; font-size: 0.85rem; word-break: break-all; background: rgba(0,255,102,0.05); padding: 8px; border-radius: 8px; border: 1px solid rgba(0,255,102,0.1); }
         
-        /* Live Notification Toast Styling */
+        /* Toast Live Notifications - 6-7 seconds rotation loop */
         .notification-toast { position: fixed; bottom: -100px; left: 20px; background: rgba(19, 25, 30, 0.95); border: 1px solid #00ccff; border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 9999; transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 320px; }
         .notification-toast.show { bottom: 20px; }
         .notif-pulse { width: 8px; height: 8px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 8px #00ff66; animation: pulse 1.5s infinite; }
@@ -203,6 +209,10 @@
             <h2>Congratulations!</h2>
             <p style="margin-bottom: 15px; font-size: 0.95rem; color: #b3b3b3;">Your order has been submitted successfully.</p>
             
+            <div class="delivery-info-box">
+                <p>📩 आपका वर्चुअल वीसीसी कार्ड (VCC Card) और सीक्रेट लॉगिन डिटेल्स आपके द्वारा दिए गए <strong>रजिस्टर्ड जीमेल (Gmail)</strong> एड्रेस पर पेमेंट वेरिफिकेशन पूरा होने के बाद <span class="days-highlight">अगले 5 दिनों के भीतर (Within 5 Days)</span> डिलीवर कर दी जाएगी। कृपया 5 दिन बाद अपना इनबॉक्स और स्पैम फोल्डर जरूर चेक करते रहें।</p>
+            </div>
+
             <div class="warning-danger-box">
                 <strong>⚠️ महत्वपूर्ण चेतावनी (Warning):</strong>
                 <p>वर्चुअल कार्ड तभी एक्टिवेट किया जाएगा जब आपकी पेमेंट 100% असली (Real) होगी और हमारे बैंक सर्वर द्वारा वेरीफाई हो जाएगी। अगर किसी ने फेक या एडिटेड स्क्रीनशॉट अपलोड किया, तो उसे कोई कार्ड नहीं मिलेगा और उसका डिवाइस हमेशा के लिए ब्लॉक कर दिया जाएगा।</p>
@@ -225,8 +235,8 @@
     </div>
 
     <script>
-        // Array containing exactly 20 diverse Indian buyers with targeted card variations
-        const fakeBuyers = [
+        // Exact 20 English-script diverse Indian database matching targeted card layouts
+        let fakeBuyers = [
             { name: "Ramesh K.", city: "Lucknow", price: "₹799", card: "Visa Card" },
             { name: "Karan S.", city: "Uttar Pradesh", price: "₹1499", card: "Platinum Card" },
             { name: "Amit Sharma", city: "Delhi NCR", price: "₹399", card: "Master Card" },
@@ -249,25 +259,41 @@
             { name: "Alok Gupta", city: "Bareilly", price: "₹1499", card: "Platinum Card" }
         ];
 
-        // Function to run and rotate notifications smoothly every 6-7 seconds
+        // Fisher-Yates Shuffle Function to randomize names order on every page load
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        let notifIndex = 0;
+
+        // Smooth rotation loop switching exactly every 6.5 seconds
         function triggerLiveNotification() {
             const toast = document.getElementById('purchase-notification');
             const content = document.getElementById('notif-content');
             
+            // Show the first random name immediately based on the shuffled order
+            const initialBuyer = fakeBuyers[notifIndex];
+            content.innerHTML = `User <strong>${initialBuyer.name}</strong> from <strong>${initialBuyer.city}</strong> just activated a <span class="notif-price">${initialBuyer.price}</span> ${initialBuyer.card}!`;
+            
             setInterval(() => {
-                const randomBuyer = fakeBuyers[Math.floor(Math.random() * fakeBuyers.length)];
+                notifIndex = (notifIndex + 1) % fakeBuyers.length;
+                const randomBuyer = fakeBuyers[notifIndex];
                 content.innerHTML = `User <strong>${randomBuyer.name}</strong> from <strong>${randomBuyer.city}</strong> just activated a <span class="notif-price">${randomBuyer.price}</span> ${randomBuyer.card}!`;
                 
                 toast.classList.add('show');
                 
                 setTimeout(() => {
                     toast.classList.remove('show');
-                }, 3500); // Popup stays visible for 3.5 seconds
+                }, 3500); // Popup visibility freeze duration
 
-            }, 6500); // Rotates exactly every 6.5 seconds loop
+            }, 6500); // 6.5 seconds window interval
         }
 
         window.onload = function() {
+            shuffleArray(fakeBuyers); // Shuffles names instantly when any user opens the site
             triggerLiveNotification();
         };
 
@@ -285,7 +311,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Live Target Countdown Configuration (Strict 5 Days baseline)
+        // Live Dynamic Countdown Clock (Fixed 5 Days target baseline limit)
         let totalSeconds = (5 * 24 * 3600) + (4 * 3600) + (32 * 60) + 15; 
         let timerInterval;
 
@@ -295,7 +321,7 @@
             timerInterval = setInterval(() => {
                 if (totalSeconds <= 0) {
                     clearInterval(timerInterval);
-                    display.innerText = "Processing Details...";
+                    display.innerText = "Verifying Details...";
                     return;
                 }
                 
@@ -324,7 +350,7 @@
                 return;
             }
 
-            // Validation Guard: Screenshot mandatory barrier
+            // Client-side Barrier Check: Ensures screen upload is completed
             if(!screenshotInput) {
                 alert("कृपया पहले पेमेंट का स्क्रीनशॉट अपलोड करें, उसके बाद ही सबमिट करें!");
                 return;
