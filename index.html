@@ -114,7 +114,6 @@
         <p>SECURE VIRTUAL TERMINAL</p>
     </div>
 
-    <!-- Original Home Screen (Cards Restored to Original) -->
     <div id="home-screen">
         <div class="card">
             <div class="card-type">MASTER CARD</div>
@@ -199,20 +198,17 @@
         </div>
     </div>
 
-    <!-- Backend Process Loader Screen (7 Seconds) -->
     <div class="loader-overlay" id="backend-loader">
         <div class="spinner"></div>
         <div class="loader-text" id="loader-msg">PROCESSING TRANSACTION...</div>
     </div>
 
-    <!-- Modified End Success Screen -->
     <div class="success-overlay" id="success-screen">
         <div class="success-card">
             <div class="success-icon">✓</div>
             <h2>Congratulations!</h2>
             <p style="margin-bottom: 10px; font-size: 0.95rem; color: #b3b3b3;">Your order has been submitted successfully.</p>
             
-            <!-- Clean Balanced Alignment Table -->
             <table class="info-table">
                 <tr>
                     <td class="label-cell">Full Name</td>
@@ -228,7 +224,6 @@
                 <p>Your registered <strong>Virtual VCC Card</strong> and secure login credentials will be systematically dispatched directly to your verified email address after a standard 5-day internal verification process. Please check your <strong>Inbox and Spam folder after exactly 5 days</strong>.</p>
             </div>
 
-            <!-- Strict Warning Box (Updated) -->
             <div class="warning-danger-box">
                 <strong>⚠️ SECURITY WARNING & ALERTS:</strong>
                 <p>वर्चुअल कार्ड तभी एक्टिवेट किया जाएगा जब आपकी पेमेंट 100% असली (Real) होगी और हमारे bank सर्वर द्वारा वेरीफाई हो जाएगी।</p>
@@ -365,7 +360,7 @@
             setTimeout(() => { loaderMsg.innerText = "VERIFYING SCREENSHOT & TRANSACTION ID..."; }, 2000);
             setTimeout(() => { loaderMsg.innerText = "SECURING GATEWAY CONNECTION..."; }, 4500);
 
-            // 2. After exactly 7 seconds, hide loader and display the final screen
+            // 2. After exactly 7 seconds, hide loader, play sound, and display the final screen
             setTimeout(() => {
                 loader.style.display = 'none';
                 
@@ -373,6 +368,16 @@
                 document.getElementById('display-email').innerText = emailInput;
                 
                 document.getElementById('success-screen').style.display = 'flex';
+
+                // Play the premium Tick Sound instantly
+                try {
+                    let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav');
+                    audio.volume = 1.0; // Full volume
+                    audio.play();
+                } catch (e) {
+                    console.log("Audio play blocked by browser navigation policy.");
+                }
+
                 startCountdown();
             }, 7000);
         }
